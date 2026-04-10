@@ -1,0 +1,154 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and wallet information",
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "age": { "type": "number" },
+        "location": { "type": "string" },
+        "email": { "type": "string" },
+        "coins": { "type": "number" },
+        "photoURL": { "type": "string" },
+        "lastDailyBonus": { "type": "string", "format": "date-time" },
+        "youtubeSubscribed": { "type": "boolean" },
+        "firstAppFreeUsed": { "type": "boolean" },
+        "usedPromoCodes": { "type": "array", "items": { "type": "string" } },
+        "role": { "type": "string" },
+        "lastTransactionId": { "type": "string" }
+      },
+      "required": ["email", "coins"]
+    },
+    "App": {
+      "title": "App",
+      "description": "Apps created by users",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "logoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "isInstalled": { "type": "boolean" },
+        "lastUpdatedBy": { "type": "string" },
+        "collaborators": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["userId", "name", "code", "createdAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global application settings",
+      "type": "object",
+      "properties": {
+        "geminiApiKey": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Coin transaction logs",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["daily_bonus", "youtube_task", "promo_code", "app_install", "premium_feature", "app_deployment"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "description": { "type": "string" }
+      },
+      "required": ["userId", "amount", "type", "timestamp"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Scheduled tasks and reminders",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "scheduledAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "scheduledAt", "status", "createdAt"]
+    },
+    "Presence": {
+      "title": "Presence",
+      "description": "Real-time user presence in an app",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "lastSeen": { "type": "string", "format": "date-time" },
+        "appId": { "type": "string" }
+      },
+      "required": ["uid", "email", "lastSeen", "appId"]
+    },
+    "Deployment": {
+      "title": "Deployment",
+      "description": "Hosted application deployments",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "appId": { "type": "string" },
+        "appName": { "type": "string" },
+        "code": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "suspended", "deleted"] },
+        "deployedAt": { "type": "string", "format": "date-time" },
+        "visits": { "type": "number" }
+      },
+      "required": ["userId", "appId", "appName", "code", "status", "deployedAt"]
+    },
+    "DeploymentError": {
+      "title": "DeploymentError",
+      "description": "Logs for failed deployments for admin review",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "appId": { "type": "string" },
+        "appName": { "type": "string" },
+        "error": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "metadata": { "type": "object" }
+      },
+      "required": ["userId", "error", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data"
+    },
+    "/apps/{appId}": {
+      "schema": "App",
+      "description": "User created apps"
+    },
+    "/settings/{settingId}": {
+      "schema": "Settings",
+      "description": "Global settings"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Transaction logs"
+    },
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User scheduled tasks"
+    },
+    "/presence/{presenceId}": {
+      "schema": "Presence",
+      "description": "Real-time presence tracking"
+    },
+    "/deployments/{deploymentId}": {
+      "schema": "Deployment",
+      "description": "Hosted app deployments"
+    },
+    "/deployment_errors/{errorId}": {
+      "schema": "DeploymentError",
+      "description": "Logs for failed deployments"
+    }
+  }
+}

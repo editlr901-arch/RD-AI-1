@@ -1,0 +1,21 @@
+{
+  "name": "RD CODE EDITOR",
+  "short_name": "RD Editor",
+  "description": "Professional AI-powered code editor for RD AI apps.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#00ff00",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/editor/192/192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://picsum.photos/seed/editor/512/512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
